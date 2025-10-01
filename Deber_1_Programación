@@ -1,0 +1,95 @@
+#include <stdio.h>
+int main(){
+    
+int ID;
+char NombreProducto[20];
+int stock;
+float PrecioUnitario;
+float ganancias;
+int opcion; 
+int Cantidad;
+
+do {
+    printf("Bienvenido al Sistema de Ventas!\t Creado por Julio De la Cruz\n");
+printf("1. Registrar producto\n");
+printf("2. Vender producto\n");
+printf("3. Reabastecer stock\n");
+printf("4. Consultar informacion\n");
+printf("5. Mostrar ganancias\n");
+printf("6. Salir\n");
+printf("Elija una opcion: ");
+scanf("%d", &opcion); 
+
+switch (opcion)
+{
+case 1: {
+    printf ("Introduzca el ID del producto:\n");
+    scanf("%d", &ID);
+    printf("Introduzca el nombre del producto:\n");
+    scanf("%s", NombreProducto);
+    printf ("Introduzca el stock del producto:\n");
+    scanf("%d", &stock);
+    printf("Introduzca el precio unitario del producto:\n");
+    scanf("%f", &PrecioUnitario);
+    printf("Producto Registrado con Exito!\n");
+    break;}
+
+case 2:{
+    printf("Vender producto\n");
+    printf("ingrese la cantidad de producto a vender:\n");
+    scanf("%d", &Cantidad);
+
+    if(Cantidad <= stock && Cantidad > 0){
+        stock-=Cantidad;
+        float ingreso = PrecioUnitario * Cantidad;
+        ganancias += ingreso;
+        printf("Venta realizada con éxito!\t Ganancia: %.2f\n", ingreso);
+    } else {
+        printf("Error: Stock insuficiente o cantidad invalida");
+    }
+    break;}
+
+    case 3:{
+        printf("Reabastecimiento de Stock\n");
+        printf("Ingrese la cantidad de Stock a reabastecer:\n");
+        scanf("%d",&Cantidad);
+        if (Cantidad > 0)
+        {
+            stock += Cantidad;
+            printf("Stock actualizado con exito\n");
+            printf("Nuevo stock disponible: %d\n", stock);
+        } else {
+            printf("Cantidad invalida\n");
+        }
+
+    break;} 
+
+case 4: {
+    printf("Informacion del producto:\n");
+    printf("ID: %d\n",ID);
+    printf("Nombre del Producto: %s\n", NombreProducto);
+    printf("Stock disponible: %d\n",stock);
+    printf("Precio Unitario del producto: %.2f\n", PrecioUnitario);
+
+break;}
+
+case 5:{
+    printf("Ganancias Totales\n");
+    printf("Tus ganancias son: $ %.2f\n", ganancias);
+break;}
+
+case 6:{
+    printf("Saliendo del programa...\n");
+break;}
+
+default:{
+    printf("Opcion invalida, intente de nuevo!");
+}
+    break;
+}
+} while(opcion != 6);
+
+
+
+    return 0;
+}
