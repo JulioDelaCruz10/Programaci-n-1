@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include "ventas.h"
+
+int pedirDias(void) {
+    int dias;
+    do {
+        printf("Ingrese cuántos dias desea registrar (1-%d): ", MAX_DIAS);
+        if (scanf("%d", &dias) != 1) {
+            /* limpiar entrada si no es número */
+            int c;
+            while ((c = getchar()) != EOF && c != '\n');
+            dias = 0; /* forzar repetición */
+            printf("Entrada invalida. Intente de nuevo.\n");
+            continue;
+        }
+        if (dias < 1 || dias > MAX_DIAS) {
+            printf("Numero de dias fuera de rango. Debe ser entre 1 y %d.\n", MAX_DIAS);
+        }
+    } while (dias < 1 || dias > MAX_DIAS);
+
+    return dias;
+}
+
+void ingresarVentas(float ventas[], int n) {
+    for (int i = 0; i < n; ++i) {
+        float monto;
+        int valido = 0;
+        do {
+            printf("Ingrese el monto de ventas para el dia %d: ", i + 1);
+            if (scanf("%f", &monto) != 1) {
+                int c;
+                while ((c = getchar()) != EOF && c != '\n');
+                printf("Entrada invalida. Ingrese un numero.\n");
+                continue;
+            }
+            if (monto < 0.0f) {
+                printf("El monto no puede ser negativo. Intente de nuevo.\n");
+            } else {
+                valido = 1;
+            }
+        } while (!valido);
+        ventas[i] = monto;
+    }
+}
+
+float calcularTotal(const float ventas[], int n) {
+    float total = 0.0f;
+    for (int i = 0; i < n; ++i) {
+        total += ventas[i];
+    }
+    return total;
+}
+
+float calcularPromedio(const float ventas[], int n) {
+    if (n <= 0) return 0.0f;
+    float total = calcularTotal(ventas, n);
+    return total / (float)n;
+}
+
+float encontrarMaximo(const float ventas[], int n) {
+    if (n <= 0) return 0.0f;
+    float max = ventas[0];
+    for (int i = 1; i < n; ++i) {
+        if (ventas[i] > max) {
+            max = ventas[i];
+        }
+    }
+    return max;
+}
+
+void mostrarResultados(const float ventas[], int n) {
+    float total = calcularTotal(ventas, n);
+    float promedio = calcularPromedio(ventas, n);
+    float maxima = encontrarMaximo(ventas, n);
+
+    printf("\n--- Resultados ---\n");
+    printf("Total de ventas: %.2f\n", total);
+    printf("Promedio de ventas: %.2f\n", promedio);
+    printf("Venta maxima: %.2f\n", maxima);
+
+    printf("\nDetalle por dia:\n");
+    for (int i = 0; i < n; ++i) {
+        printf("Dia %2d: %.2f\n", i + 1, ventas[i]);
+    }
+    printf("------------------\n");
+}
