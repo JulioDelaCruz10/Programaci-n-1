@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "ventas.h"
+
+int main(void) {
+    printf("=== Registro de ventas diarias ===\n");
+
+    int dias = pedirDias();
+
+    /* Reservar arreglo dinámico (o puedes usar un arreglo estático) */
+    float *ventas = (float *) malloc(sizeof(float) * dias);
+    if (ventas == NULL) {
+        fprintf(stderr, "Error: no se pudo reservar memoria.\n");
+        return 1;
+    }
+
+    ingresarVentas(ventas, dias);
+
+    mostrarResultados(ventas, dias);
+
+    free(ventas);
+
+    printf("Programa finalizado. Compilar con: gcc main.c funciones.c -o ventas\n");
+    return 0;
+}
