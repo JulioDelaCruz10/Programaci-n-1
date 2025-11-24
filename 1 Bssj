@@ -1,0 +1,15 @@
+#ifndef VENTAS_H
+#define VENTAS_H
+
+/* Máximo días permitidos */
+#define MAX_DIAS 30
+
+/* Prototipos de funciones */
+int pedirDias(void);
+void ingresarVentas(float ventas[], int n);
+float calcularTotal(const float ventas[], int n);
+float calcularPromedio(const float ventas[], int n);
+float encontrarMaximo(const float ventas[], int n);
+void mostrarResultados(const float ventas[], int n);
+
+#endif /* VENTAS_H */
